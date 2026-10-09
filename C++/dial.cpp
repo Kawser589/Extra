@@ -8,7 +8,6 @@ int main()
     int pin = 0;
     int cPin;
     double cash = 0;
-    double sendCash;
     cout << "==========     Welcome to FUN World    ==========" << endl << endl;
     cout << "Please enter your number: ";
     cin >> number;
@@ -26,7 +25,7 @@ int main()
     while(true)
     {
         int mainOption;
-        cout << "----------------"
+        cout << "----------------" << endl;
         cout << "1. Dial *247#" << endl;
         cout << "2. Dial *121#" << endl;
         cout << "0. Exit" << endl;
@@ -67,6 +66,7 @@ int main()
                     {
                         int wAt = 0;
                         int cPin;
+                        double sendCash;
                         cout << "Enter receiver account number: ";
                         cin >> reciverNumber;
                         cout << "Enter amount: ";
@@ -76,23 +76,27 @@ int main()
                             cout << "Not enough balance. Current Balance: " << cash << endl;
                             break;
                         }
-                        cout << "To confirm transaction please Enter PIN: ";
-                        cin >> cPin;
-                        if(cash >= sendCash)
+                        else
                         {
+                            cout << "To confirm transaction please Enter PIN: ";
+                            cin >> cPin;
                             while(cPin != pin)
                                 {
                                     wAt++;
                                     cout << "Wrong PIN. Please enter PIN again: ";
                                     cin >> cPin;
-                                    if(wAt > 3)
+                                    if(wAt >= 2)
                                     {
                                         cout << "Auto exit for many wrong attempts" << endl;
                                         break;
                                     }
+                                    if(cPin == pin)
+                                    {
+                                        cash -= sendCash;
+                                        cout << "Transaction successful... New balance: " << cash << endl;
+                                    }
                                 }
-                            cash -= sendCash;
-                            cout << "Transaction successful... New balance: " << cash << endl;
+                                break;
                         }
                         break;
                     }
@@ -102,7 +106,88 @@ int main()
                     }
                 case 3:
                     {
-                        break;
+                        int opt;
+                        int wAt = 0;
+                        int rPin;
+                        int rAm;
+                        cout << "1. Own number (" << number << ")" << endl;
+                        cout << "2. New number" << endl;
+                        cout << "0. Back" << endl;
+                        cin >> opt;
+                        switch(opt)
+                        {
+                        case 1:
+                            {
+                                cout << "Account number: " << number << endl;
+                                cout << "Please enter amount: ";
+                                cin >> rAm;
+                                if(rAm > cash)
+                                {
+                                    cout << "Not enough balance";
+                                    break;
+                                }
+                                else
+                                {
+                                    cout << "Enter PIN to confirm: ";
+                                    cin >> rPin;
+                                    while(rPin != pin)
+                                    {
+                                        wAt++;
+                                        cout << "Wrong PIN. Please enter PIN again: ";
+                                        cin >> rPin;
+                                        if(wAt > 3)
+                                        {
+                                            cout << "Many wrong attempts." << endl;
+                                            break;
+                                        }
+                                    }
+                                    cash -= rAm;
+                                    cout << "Recharge successful. Current new balance: " << cash << endl;
+                                }
+                                break;
+                            }
+                        case 2:
+                            {
+                                string num;
+                                cout << "Account number: ";
+                                cin >> num;
+                                cout << "Please enter amount: ";
+                                cin >> rAm;
+                                if(rAm > cash)
+                                {
+                                    cout << "Not enough balance";
+                                    break;
+                                }
+                                else
+                                {
+                                    cout << "Enter PIN to confirm: ";
+                                    cin >> rPin;
+                                    while(rPin != pin)
+                                    {
+                                        wAt++;
+                                        cout << "Wrong PIN. Please enter PIN again: ";
+                                        cin >> rPin;
+                                        if(wAt > 3)
+                                        {
+                                            cout << "Many wrong attempts." << endl;
+                                            break;
+                                        }
+                                    }
+                                    cash -= rAm;
+                                    cout << "Recharge successful. Current new balance: " << cash << endl;
+                                }
+                                break;
+                            }
+                        case 0:
+                            {
+                                break;
+                            }
+                        default:
+                            {
+                                cout << "Invalid input" << endl;
+                                break;
+                            }
+                        }
                     }
                 case 4:
                     {
